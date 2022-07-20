@@ -8,7 +8,7 @@ class WeatherViewController: UIViewController,UITextFieldDelegate {
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var cityTextField: UITextField!
-    
+    let weather = Weather()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +22,7 @@ class WeatherViewController: UIViewController,UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         print(cityTextField.text!)
+        cityTextField.endEditing(true)
         return true
     }
     
@@ -35,7 +36,15 @@ class WeatherViewController: UIViewController,UITextFieldDelegate {
         
     }
     func textFieldDidEndEditing(_ textField: UITextField) {
+        
+        if let city = cityTextField.text{
+            weather.fetchWeatherDetails(cityName: city)
+        }
         cityTextField.text = ""
+     
+        
+        
+        
     }
 }
 
