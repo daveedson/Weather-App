@@ -17,7 +17,7 @@ class WeatherViewController: UIViewController,UITextFieldDelegate {
 
     @IBAction func searchButton(_ sender: UIButton) {
         cityTextField.endEditing(true)
-        print(cityTextField.text!)
+      
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

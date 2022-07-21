@@ -22,28 +22,44 @@ struct Weather{
             let session = URLSession(configuration: .default)
             
             //3 Give the session a task
-          let task =   session.dataTask(with: url, completionHandler: handle(data: response: error: ))
+            let task =   session.dataTask(with: url) {data, response, error in
+                if error != nil {
+                    print(error!)
+                    return
+                }
+                
+                if let safeData =  data{
+                    let dataString = String(data: safeData, encoding: .utf8)
+                    print(dataString!)
+                    let decodedData = JSONDecoder()
+                    do{
+                        let responseData = try decodedData.decode(WeatherData.self, from: safeData)
+                        print(responseData.weather[0].description)
+                    }catch{
+                        print(error)
+                    }
+                   
+                }
+                
+            }
             
             //4. Start the task
             task.resume()
-            
-            
-        }
-        
-        
-        
+        }     
     }
     
-    func handle(data:Data?, response:URLResponse?, error:Error?){
-        if error != nil {
-            print(error!)
-            return
-        }
-        
-        if let safeData =  data{
-            let dataString = String(data: safeData, encoding: .utf8)
-            print(dataString!)
-        }
-        
-    }
+    
+    
+//    func decodeData(weatherData: Data) {
+//        let decodedData = JSONDecoder()
+//        do{
+//         let responseData =    try  decodedData.decode(WeatherData.self, from: weatherData)
+//            print(responseData.name)
+//
+//        }catch {
+//            print(error)
+//        }
+//
+//    }
+    
 }
