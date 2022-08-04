@@ -2,19 +2,20 @@
 import Foundation
 
 
-struct WeatherData : Decodable{
+struct WeatherData : Codable{
     
     let name : String
     let main: Main
     let weather: [DWeather]
 }
 
-struct Main: Decodable{
+struct Main: Codable{
     let temp: Double
 }
 
 
-struct DWeather: Decodable{
+struct DWeather: Codable{
     let description: String
-     
+    let id:Int
+    
 }

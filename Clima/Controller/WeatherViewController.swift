@@ -2,16 +2,17 @@
 
 import UIKit
 
-class WeatherViewController: UIViewController,UITextFieldDelegate {
+class WeatherViewController: UIViewController,UITextFieldDelegate, WeatherDelegate {
 
     @IBOutlet weak var conditionImageView: UIImageView!
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var cityTextField: UITextField!
-    let weather = Weather()
+    var weather = Weather()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        weather.delegate = self
         cityTextField.delegate = self
     }
 
@@ -45,6 +46,17 @@ class WeatherViewController: UIViewController,UITextFieldDelegate {
         
         
         
+    }
+    
+    func didUpdateWeather(_ weather:Weather ,weatherModel: WeatherModel){
+        DispatchQueue.main.async {
+            self.temperatureLabel.text = weatherModel.tempratureString
+            print(weatherModel.temprature)        }
+       
+    }
+    
+    func didFailWithError(error: Error) {
+        print("Something went wrong")
     }
 }
 
